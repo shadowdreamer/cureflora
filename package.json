@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@nuxtjs/tailwindcss": "^6.12.0",
+    "@pinia/nuxt": "^0.5.1",
+    "gsap": "^3.12.5",
+    "mitt": "^3.0.1",
     "nuxt": "^3.11.2",
     "vue": "^3.4.27",
     "vue-router": "^4.3.2"
@@ -19,5 +22,8 @@
     "@vue/language-plugin-pug": "^2.0.19",
     "pug": "^3.0.3",
     "sass": "^1.77.4"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }
