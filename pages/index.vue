@@ -5,7 +5,6 @@ Shutter
   div(class="h-[100vh]")
 </template>
 <script setup>
-import KeyVisual from '@/components/index/KeyVisual.vue'
 import Shutter from '@/components/index/Shutter.vue'
 </script>
 <style scoped lang="scss">
