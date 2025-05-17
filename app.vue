@@ -1,9 +1,10 @@
 <template lang="pug">
 NuxtLayout
   NuxtPage
+IndexShutter
 </template>
 <style>
-@import url("@/assets/style/index.scss");
+ 
 
 </style>
 

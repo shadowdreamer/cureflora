@@ -1,8 +1,8 @@
 <template lang="pug">
 .shutter
   .skyline
-.blur_image_warp(ref="warp")
-.flex(class="pt-[12vh]")
+//- .blur_image_warp(ref="warp")
+.flex.w-full(class="pt-[12vh]")
   .flora-kv(ref="kv_warp")
     .kv-cover
     .shadow-container
@@ -11,8 +11,7 @@
 </template>
 <script setup lang="ts">
 import { gsap } from "gsap";
-import { onMounted } from 'vue';
-// const { $bus } = useNuxtApp() as any
+
 const kvImg = '/images/54747876_p0.webp';
 const kv_warp = ref<any>(null);
 const tl = gsap.timeline();
@@ -38,11 +37,6 @@ function initalize() {
   })
 }
 async function initAnimate() {
-  gsap.set('.blur_image_warp', {
-    opacity: 0.3,
-    filter: 'blur(500px)',
-    backgroundSize: '150% 150%',
-  })
   const tl = gsap.timeline();
   tl.to(".skyline", {
     height: '100%',
@@ -55,16 +49,16 @@ async function initAnimate() {
     }, ">")
     .to(".shutter", {
       opacity: 0,
-      duration: 1,
+      duration: 1.2,
       onComplete: () => {
         document.querySelector(".shutter")?.remove();
       }
-    }, "shutter_end-=0.3")
-    .to('.blur_image_warp', {
-      filter: 'blur(5px)',
-      backgroundSize: '100% 100%',
-      duration: 2
-    }, "shutter_end-=0.3")
+    }, 1)
+    // .to('.blur_image_warp', {
+    //   filter: 'blur(5px)',
+    //   backgroundSize: '100% 100%',
+    //   duration: 1.2
+    // }, 1.2)
     .to('.flora-kv', {
       scale: 1,
       opacity: 1,
