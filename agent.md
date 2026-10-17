@@ -1,6 +1,6 @@
 # CureFlora · Agent 工作指南
 
-更新：2026-10-17。本文描述当前已实现的项目，适用于后续维护。
+更新：2026-10-18。本文描述当前已实现的项目，适用于后续维护。
 
 ## 项目目标
 
@@ -40,7 +40,8 @@ app/
 public/
   photos/                       17 张本地 WebP 插画及保留的原图
   favicon.svg
-.openai/hosting.json             Sites 项目标识与静态产物目录
+  robots.txt
+  sitemap.xml
 nuxt.config.ts
 package.json
 pnpm-lock.yaml
@@ -60,9 +61,9 @@ pnpm-lock.yaml
 - 视觉采用奶油纸色、柔玫瑰与鼠尾草绿。照片卡片的 `.photo-mat` 使用 `public/ornaments/lace.svg` 的重复九宫格边框，保持不同尺寸下蕾丝针脚比例；装饰不接收指针事件，图片按钮仍负责灯箱交互。手机缩小花边并增加列间距。
 - 照片内四角使用 `public/ornaments/inner-corner.svg` 奶油白与淡金藤蔓镶边，通过 `.photo-inlay` 的四个镜向旋转角饰覆盖在图片上，随卡片缩放但不随图片悬停放大；对辅助技术隐藏且不接收指针事件。
 - `.photo-wall-stage` 内的 `LandingWallRibbon` 使用三条淡玫瑰与金色 SVG 贝塞尔曲线贯穿照片墙背景，随网格实际高度伸展、保持描边粗细，首尾淡出；装饰独立分层、不参与网格、不接收指针事件，也不增加动画或滚动监听。
-- Hero 主图使用柔和拱形与细线外框，中段叶形线条与页脚弧线延续童话剪贴簿风格；保留现有指定日文字体与文案。
+- Hero 桌面采用左文右图双栏构图，标题与简介共用左侧对齐轴；右侧主图采用柔和拱形、细线外框和柔玫瑰纯色底衬，无投影及图片渐变遮罩，图注置于画面下方，六出花点缀右上角。相框约 4:3，宽度同时受可用列宽与屏幕高度约束；768px 及以下按标题、插画、简介排序，首屏完整显示。中段叶形线条与页脚弧线延续童话剪贴簿风格；保留现有指定日文字体与文案。
 - 网站图标 `public/favicon.svg` 为百合花；页头、Hero、中段、结束语和页脚的花形点缀统一使用 `LandingAlstroemeria` 六出花 SVG 组件，以 currentColor 继承配色，装饰对辅助技术隐藏。
-- Hero 保留原有滚动视差。照片墙使用可逆的轻阻尼上浮入场：以不移动的 `.photo-card` 为触发器，同时移动其 `[data-photo-float]` 相框和标题；向下滚从正 y 位移回到 0，进入视窗中下部后落位，向上滚反向退回。桌面 scrub 为 0.4 秒、手机为 0.3 秒且降低位移；与既有 GSAP ticker 共用驱动，不降低帧率、不排队播放、不增加滚轮监听，不逐帧测量布局。
+- Hero 按用户要求保持静态，不再设置入场透明度、位移或滚动视差，避免揭幕后文字闪动。标题、主图和留白按 svh 与屏幕宽度共同缩放，导航与 KV 在常规手机、平板及桌面尺寸内一屏呈现；保留错落标题、花饰及拱形相框。照片墙使用可逆的轻阻尼上浮入场：以不移动的 `.photo-card` 为触发器，同时移动其 `[data-photo-float]` 相框和标题；向下滚从正 y 位移回到 0，进入视窗中下部后落位，向上滚反向退回。桌面 scrub 为 0.4 秒、手机为 0.3 秒且降低位移；与既有 GSAP ticker 共用驱动，不降低帧率、不排队播放、不增加滚轮监听，不逐帧测量布局。
 - 系统启用减少动态效果时，不创建视差与入场动画，不初始化 Lenis；运行时切换也需生效。
 
 ## 动画与生命周期约定
@@ -89,7 +90,7 @@ pnpm-lock.yaml
 ## SEO、素材与边界
 
 - SSR 输出实际内容，每页一个 h1，不把整页放进 ClientOnly。
-- 标题、description、canonical 和 OG URL 由布局与页面管理。部署域名来自 runtimeConfig.public.siteUrl，可用 NUXT_PUBLIC_SITE_URL 覆盖。
+- 生产域名为 `https://www.cureflora.com/`。`runtimeConfig.public.siteUrl` 默认使用此域名（不含末尾斜线），可用 `NUXT_PUBLIC_SITE_URL` 覆盖。标题、description、canonical、OG URL 与 OG/Twitter 图片由布局与页面管理，页面地址不含查询参数或锚点，分享图片使用绝对地址。`public/robots.txt` 允许抓取并指向 `public/sitemap.xml`；站点地图列出 `/`、`/about`，新增页面或变更生产域名时同步更新。
 - 当前插画由用户提供，16 个编号已从 https://www.pixiv.net/artworks/{id} 对应的公开作品信息核对标题、说明与作者。图片旁仅显示标题与副标题；作者和 Pixiv 原作链接保留在详情内，外链使用新标签页和 noopener noreferrer。无编号的 GmWmxRua8AAmebf.jfif 来源仍未确认，不推测作者或链接，不声明为原创或 Unsplash 素材。外部说明仅以纯文本插值渲染，不使用 v-html。
 - 全站统一使用 `--font-body` 字体栈，优先通过 @font-face 加载 `assets/fonts/FOT-Pearl_Std_L.woff`，保留 font-display: swap。缺失的英文字形依次回退到 Iowan Old Style、Palatino Linotype、Book Antiqua、Palatino，再回退到 Georgia、Times New Roman；日文字形保留游明朝等系统回退，最终使用 serif。导航、按钮、正文、标题和灯箱均使用同一字体栈，不另引入网络字体，不替换用户提供的 FOT 字体。
 - 不默认添加账户、后台、上传、支付、数据库、搜索或无限滚动。
@@ -106,17 +107,13 @@ pnpm generate
 
 `pnpm typecheck` 先生成 Nuxt 类型，再使用 vue-tsc --build 检查全部引用。Nuxt prepare 的 hook 把 Pug 语言插件写入生成配置，不能只在根 tsconfig 写插件然后忽略引用项目。
 
-Windows 环境若系统 Node 太旧，可使用项目忽略目录 `.tools/node_modules/node/bin` 中的独立运行时；它不属于项目源码，也不会发布。推荐正常开发环境安装满足 engines 的 Node 后直接执行上述命令。
-
-发布静态页面使用 `pnpm generate`，产物为 `.output/public`。构建与 generate 顺序执行，避免并发覆盖输出；发布前停止开发服务器并检查最终静态产物。
+Windows 环境若系统 Node 太旧，可使用项目忽略目录 `.tools/node_modules/node/bin` 中的独立运行时；它不属于项目源码。推荐正常开发环境安装满足 engines 的 Node 后直接执行上述命令。需要本地构建验证时，`build` 与 `generate` 顺序执行，避免并发覆盖输出。
 
 后续涉及界面或滚动逻辑时，验证 375/768/1440px、键盘灯箱、图片加载失败、路由往返、动态效果偏好运行时切换和无脚本基本阅读。浏览器模拟触屏不能替代真实设备手感验证，交付时据实说明。
 
-## 发布范围
+## 自动部署约定
 
-当前按用户要求仅维护本地项目，不继续构建、打包或站点发布。已有站点标识保留在 `.openai/hosting.json`，用于避免未来重复创建；本次没有发布。只有后续用户明确要求时才恢复发布流程。
-
-不默认填写生产域名。未来确认域名后使用 NUXT_PUBLIC_SITE_URL；未配置时不输出 canonical 和 og:url。
+用户已配置 master 分支的自动部署，生产站点为 `https://www.cureflora.com/`。后续不需要关心发布：只负责代码维护和必要的本地验证，不执行手动发布、上传、Sites 打包或部署状态跟踪，不调整既有自动部署流程。除非用户另行明确要求，不开展发布工作。
 
 ## 官方参考
 

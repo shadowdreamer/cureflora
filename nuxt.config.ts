@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
   } },
   image: { format: ['webp'], quality: 82 },
-  runtimeConfig: { public: { siteUrl: '' } },
+  runtimeConfig: { public: { siteUrl: 'https://www.cureflora.com' } },
   typescript: { strict: true },
   hooks: {
     'prepare:types'({ tsConfig }) {

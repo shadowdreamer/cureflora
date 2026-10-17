@@ -9,8 +9,9 @@
 <script setup lang="ts">
 import { heroPhoto } from '~/data/photos'
 const route = useRoute()
-const siteUrl = useRuntimeConfig().public.siteUrl
-const canonical = computed(() => siteUrl ? `${siteUrl.replace(/\/$/, '')}${route.path}` : undefined)
+const siteUrl = useRuntimeConfig().public.siteUrl.replace(/\/+$/, '')
+const canonical = computed(() => siteUrl ? `${siteUrl}${route.path}` : undefined)
+const shareImage = siteUrl ? `${siteUrl}${heroPhoto.src}` : heroPhoto.src
 useHead({
   titleTemplate: title => title ? `${title} — CureFlora` : 'CureFlora — A little closer to wonder',
   link: () => canonical.value ? [{ rel: 'canonical', href: canonical.value }] : [],
@@ -20,7 +21,8 @@ useSeoMeta({
   ogSiteName: 'CureFlora',
   ogType: 'website',
   ogUrl: () => canonical.value,
-  ogImage: siteUrl ? `${siteUrl.replace(/\/$/, '')}${heroPhoto.src}` : heroPhoto.src,
+  ogImage: shareImage,
   twitterCard: 'summary_large_image',
+  twitterImage: shareImage,
 })
 </script>

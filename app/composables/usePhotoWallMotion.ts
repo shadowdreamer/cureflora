@@ -30,14 +30,6 @@ export function usePhotoWallMotion(root: Ref<HTMLElement | null>) {
       media.add({ desktop: '(min-width: 769px)', mobile: '(max-width: 768px)', reduce: '(prefers-reduced-motion: reduce)' }, match => {
         if (match.conditions?.reduce) return
         const desktop = match.conditions?.desktop
-        gsap.from('[data-hero-reveal]', { y: 36, opacity: 0, duration: 1.15, stagger: 0.12, ease: 'power3.out' })
-        gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach(element => {
-          const distance = Number(element.dataset.parallax) * (desktop ? 1 : 0.35)
-          gsap.fromTo(element, { y: distance }, { y: -distance, ease: 'none', scrollTrigger: {
-            trigger: element.parentElement, start: 'top bottom', end: 'bottom top', scrub: true,
-            invalidateOnRefresh: true,
-          } })
-        })
         gsap.utils.toArray<HTMLElement>('.photo-card').forEach((card, index) => {
           // Measure the stationary figure; move its frame and caption together.
           // One scrub tween follows the latest scroll position in either direction.

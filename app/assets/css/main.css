@@ -57,28 +57,30 @@ em { font-family: var(--font-body); font-weight: 400; }
 .header-nav a:hover::after { transform: scaleX(1); }
 .header-cta { border: 1px solid var(--line); border-radius: 100px; padding: 13px 21px; font-size: 12px; display: flex; align-items: center; gap: 25px; transition: color .25s, background .25s; }
 .header-cta:hover { background: var(--ink); color: var(--paper); }
-.hero { padding: 34px 4.5% 0; }
+.hero { min-height: calc(100svh - 108px); display: flex; flex-direction: column; padding: clamp(14px, 2svh, 24px) 4.5% 0; }
 .hero-kicker, .hero-footnote { display: flex; justify-content: space-between; font-size: 9px; letter-spacing: 1.7px; line-height: 1.5; }
-.hero-title-wrap { position: relative; margin-top: 44px; }
-.hero-title { position: relative; z-index: 2; font-size: clamp(48px, 8.1vw, 148px); letter-spacing: .025em; line-height: 1.45; pointer-events: none; }
-.hero-title-first { display: block; }
-.hero-title-second { display: block; padding-left: 15%; }
-.hero-flower { position: absolute; right: 7%; top: 0; font-size: clamp(80px, 10vw, 180px); line-height: .85; color: var(--sage); z-index: 0; opacity: .65; }
-.hero-bottom { position: relative; display: grid; grid-template-columns: 28% 68% 4%; align-items: center; margin-top: 8px; }
-.hero-description { position: relative; z-index: 3; padding-top: 90px; }
-.hero-description p { font-size: clamp(12px, 1.05vw, 17px); line-height: 1.9; }
+.hero-main { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 6%; padding: clamp(36px, 7svh, 84px) 0; }
+.hero-copy { min-width: 0; }
+.hero-title-wrap { position: relative; }
+.hero-title { font-size: clamp(30px, min(3.7vw, 6svh), 68px); letter-spacing: .025em; line-height: 1.65; }
+.hero-title-first, .hero-title-second { display: block; white-space: nowrap; }
+.hero-title-second { padding-left: .65em; }
+.hero-description { margin-top: clamp(24px, 5svh, 60px); padding-left: 2.2em; }
+.hero-description p { font-size: clamp(12px, 1.05vw, 17px); line-height: 1.9; color: var(--muted); }
 .text-link { font-size: 11px; display: inline-flex; gap: 32px; align-items: center; padding: 12px 0; margin-top: 25px; border-bottom: 1px solid currentColor; }
 .text-link span { font-size: 19px; transition: transform .25s; }
 .text-link:hover span { transform: translate(3px, 3px); }
-.hero-photo-frame { position: relative; height: clamp(300px, 37vw, 660px); margin-top: 10px; }
-.hero-photo-frame::before { content: ''; position: absolute; inset: -26px -18px; border: 1px solid var(--line); border-radius: 49% 49% 14px 14px / 12% 12% 14px 14px; transform: rotate(-2deg); pointer-events: none; }
-.hero-photo { position: absolute; inset: 0; overflow: hidden; background: #b5b49c; border: 9px solid #fffcf5; border-radius: 46% 46% 5px 5px / 15% 15% 5px 5px; box-shadow: 0 15px 45px #79503e12; }
-.hero-photo img { height: 100%; object-fit: cover; object-position: 50% 42%; }
-.hero-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 65%, #26271055); pointer-events: none; }
-.hero-photo-label { position: absolute; left: 24px; bottom: 23px; z-index: 1; color: white; font-size: 9px; letter-spacing: 1.6px; }
-.hero-side-note { writing-mode: vertical-rl; font-family: var(--font-body); justify-self: end; font-size: 12px; letter-spacing: 2px; }
-.hero-side-note span:last-child { font: 8px var(--font-body); display: block; letter-spacing: 1.3px; margin-right: 10px; }
-.hero-footnote { padding: 38px 0 20px; border-bottom: 1px solid var(--line); }
+.hero-art { position: relative; min-width: 0; padding: 24px 28px 32px 0; }
+.hero-art::before { content: ''; position: absolute; inset: 0 8% 3% 8%; background: var(--rose); border-radius: 48% 48% 2px 2px; pointer-events: none; }
+.hero-flower { position: absolute; right: 0; top: -20px; font-size: clamp(54px, 6vw, 96px); color: var(--sage); z-index: 2; }
+.hero-photo-frame { position: relative; width: min(100%, 66svh, 720px); aspect-ratio: 4 / 3; margin: 0 auto; }
+.hero-photo-frame::before { content: ''; position: absolute; inset: -12px; border: 1px solid var(--line); border-radius: 46% 46% 3px 3px / 16% 16% 3px 3px; pointer-events: none; }
+.hero-photo { position: absolute; inset: 0; overflow: hidden; background: #fffcf5; border: 6px solid #fffcf5; border-radius: 46% 46% 2px 2px / 16% 16% 2px 2px; }
+.hero-photo img { height: 100%; object-fit: cover; object-position: 50% 58%; }
+.hero-photo-label { position: absolute; left: 0; bottom: -30px; font-size: 8px; letter-spacing: 1.6px; }
+.hero-side-note { position: absolute; right: -8px; bottom: 36px; writing-mode: vertical-rl; font-size: 12px; letter-spacing: 2px; }
+.hero-side-note span:last-child { font-size: 8px; display: block; letter-spacing: 1.3px; margin-right: 10px; }
+.hero-footnote { padding: 24px 0 18px; border-bottom: 1px solid var(--line); }
 .hero-footnote > :nth-child(2) { font-size: 22px; line-height: .6; }
 .eyebrow { font-size: 9px; line-height: 1.6; letter-spacing: 1.9px; }
 .journal-note { text-align: center; padding: 130px 24px 110px; position: relative; }
@@ -190,11 +192,8 @@ em { font-family: var(--font-body); font-weight: 400; }
 .image-credits > p:not(.eyebrow), .image-credits li { font-size: 13px; line-height: 1.8; }
 .image-credits ul { list-style: none; padding: 0; margin: 20px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 32px; }
 .image-credits a { text-decoration: underline; text-underline-offset: 4px; }
-@media (min-width: 1921px) { .hero-title { font-size: 152px; } }
 @media (max-width: 1024px) {
   .header-nav { gap: 22px; }
-  .hero-title { font-size: 8.1vw; }
-  .hero-description { padding-top: 45px; }
   .hero-description p { font-size: 12px; }
   .hero-description .text-link { gap: 12px; }
   .journal-note { padding: 100px 24px; }
@@ -204,26 +203,31 @@ em { font-family: var(--font-body); font-weight: 400; }
 @media (max-width: 768px) {
   .site-header { height: 82px; margin: 0 6%; gap: 16px; }
   .wordmark { font-size: 30px; }
+  .site-header .wordmark { font-size: clamp(20px, 5.6vw, 30px); white-space: nowrap; }
+  .site-header .wordmark-star { font-size: .8em; }
   .header-nav { margin-left: auto; }
-  .header-nav a { font-size: 11px; }
+  .header-nav a { font-size: clamp(9px, 2.5vw, 11px); white-space: nowrap; }
   .header-nav a:last-child, .header-cta { display: none; }
-  .hero { padding: 28px 6% 0; }
+  .hero { min-height: calc(100svh - 82px); padding: clamp(14px, 2svh, 20px) 6% 0; }
   .hero-kicker { font-size: 8px; letter-spacing: 1px; }
   .hero-kicker > span:last-child { display: none; }
-  .hero-title-wrap { margin-top: 38px; }
-  .hero-title { font-size: 9.3vw; line-height: 1.65; letter-spacing: .015em; }
+  .hero-main { grid-template-columns: minmax(0, 1fr); gap: 24px; align-content: center; padding: 20px 0 12px; }
+  .hero-copy { display: contents; }
+  .hero-title-wrap { order: 0; }
+  .hero-title { font-size: clamp(24px, min(8.8vw, 5.2svh), 60px); line-height: 1.45; letter-spacing: .015em; }
   .hero-title-second { padding-left: 4%; }
-  .hero-flower { right: 2%; top: 0; font-size: 15vw; opacity: .7; }
-  .hero-bottom { grid-template-columns: 1fr; gap: 27px; margin-top: 25px; }
-  .hero-description { order: 2; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0; }
+  .hero-art { order: 1; padding: 12px 10px 24px; margin: 0 3%; }
+  .hero-art::before { inset: 0 5% 0 10%; }
+  .hero-flower { right: -10px; top: -20px; font-size: min(14vw, 8svh); }
+  .hero-description { order: 2; display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0; padding: 0; }
   .hero-description p { font-size: 11px; line-height: 1.7; }
   .hero-description .text-link { font-size: 10px; margin-top: 0; gap: 12px; white-space: nowrap; }
-  .hero-photo-frame { height: 68vw; max-height: 550px; margin: 0; }
-  .hero-photo-frame::before { inset: -14px -9px; }
-  .hero-photo { border-width: 6px; }
-  .hero-photo-label { left: 16px; bottom: 17px; font-size: 8px; }
+  .hero-photo-frame { width: 100%; aspect-ratio: auto; height: min(56vw, 32svh, 360px); max-height: max(120px, calc(100svh - 470px)); }
+  .hero-photo-frame::before { inset: -8px; }
+  .hero-photo { border-width: 4px; }
+  .hero-photo-label { bottom: -21px; font-size: 7px; letter-spacing: 1px; }
   .hero-side-note { display: none; }
-  .hero-footnote { padding: 34px 0 20px; font-size: 7px; letter-spacing: .8px; }
+  .hero-footnote { padding: 22px 0 16px; font-size: 7px; letter-spacing: .8px; }
   .hero-footnote > :last-child { display: none; }
   .journal-note { padding: 85px 6% 75px; }
   .journal-note > .journal-quote { font-size: clamp(16px, 4.5vw, 30px); line-height: 2.1; letter-spacing: .025em; }
