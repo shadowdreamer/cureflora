@@ -7,8 +7,10 @@ section#collection.collection(aria-labelledby="collection-title")
       p No grand occasions. Just little things
         br
         | that make you stop, look, and feel.
-  .photo-grid
-    LandingPhotoCard(v-for="(photo, index) in photos" :key="photo.id" :photo="photo" :index="index" @open="openPhoto")
+  .photo-wall-stage
+    LandingWallRibbon
+    .photo-grid
+      LandingPhotoCard(v-for="(photo, index) in photos" :key="photo.id" :photo="photo" :index="index" @open="openPhoto")
   .collection-end(data-reveal)
     LandingAlstroemeria.small-flower
     p.japanese-display(lang="ja") 咲きほこる
