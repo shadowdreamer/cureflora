@@ -9,7 +9,7 @@ main#main(ref="root")
       span.quote-line 冷たい檻に閉ざされた夢、
       span.quote-line 返して頂きますわ!
       span.quote-line.quote-challenge お覚悟はよろしくて?
-    span.journal-note-flower(aria-hidden="true") ✳
+    LandingAlstroemeria.journal-note-flower
   LandingPhotoWall
 </template>
 

@@ -9,10 +9,12 @@
 }
 
 :root {
-  --paper: #f6f2e9;
-  --ink: #792d3c;
-  --muted: #826d68;
-  --line: #792d3c30;
+  --paper: #f8f3ea;
+  --ink: #794652;
+  --muted: #876f6b;
+  --line: #aa7c7c40;
+  --rose: #ead5d2;
+  --sage: #9bA58b;
   --serif: 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
   --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --jp-serif: 'FOT Pearl', 'Yu Mincho', 'Hiragino Mincho ProN', 'Noto Serif JP', 'MS PMincho', serif;
@@ -25,7 +27,13 @@
 }
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-padding-top: 36px; }
-body { margin: 0; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(ellipse at 4% 8%, #ead5d245, transparent 42%),
+    radial-gradient(ellipse at 96% 36%, #dce3cf45, transparent 38%),
+    var(--paper);
+}
 body:has(dialog[open]) { overscroll-behavior: none; }
 ::selection { color: var(--paper); background: var(--ink); }
 a { color: inherit; text-decoration: none; }
@@ -43,7 +51,8 @@ em { font-family: var(--serif); font-weight: 400; }
 .skip-link:focus { transform: none; }
 .site-header { height: 108px; margin: 0 4.5%; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .wordmark { font-family: var(--serif); font-size: 34px; letter-spacing: -2px; font-weight: 600; display: inline-flex; align-items: center; }
-.wordmark-star { font-family: var(--sans); font-size: 29px; margin-left: 3px; }
+.flower-ornament { display: block; width: 1em; height: 1em; flex-shrink: 0; pointer-events: none; }
+.wordmark-star { font-size: 29px; margin-left: 5px; }
 .header-nav { display: flex; gap: 38px; font-size: 12px; }
 .header-nav a { padding: 16px 0; position: relative; }
 .header-nav a::after { content: ''; position: absolute; left: 0; bottom: 9px; width: 100%; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform .25s; }
@@ -56,7 +65,7 @@ em { font-family: var(--serif); font-weight: 400; }
 .hero-title { position: relative; z-index: 2; font-size: clamp(48px, 8.1vw, 148px); letter-spacing: .025em; line-height: 1.45; pointer-events: none; }
 .hero-title-first { display: block; }
 .hero-title-second { display: block; padding-left: 15%; }
-.hero-flower { position: absolute; right: 7%; top: 0; font-size: clamp(80px, 10vw, 180px); line-height: .85; color: #b3a17f; z-index: 0; }
+.hero-flower { position: absolute; right: 7%; top: 0; font-size: clamp(80px, 10vw, 180px); line-height: .85; color: var(--sage); z-index: 0; opacity: .65; }
 .hero-bottom { position: relative; display: grid; grid-template-columns: 28% 68% 4%; align-items: center; margin-top: 8px; }
 .hero-description { position: relative; z-index: 3; padding-top: 90px; }
 .hero-description p { font-size: clamp(12px, 1.05vw, 17px); line-height: 1.9; }
@@ -64,7 +73,8 @@ em { font-family: var(--serif); font-weight: 400; }
 .text-link span { font-size: 19px; transition: transform .25s; }
 .text-link:hover span { transform: translate(3px, 3px); }
 .hero-photo-frame { position: relative; height: clamp(300px, 37vw, 660px); margin-top: 10px; }
-.hero-photo { position: absolute; inset: 0; overflow: hidden; background: #b5b49c; }
+.hero-photo-frame::before { content: ''; position: absolute; inset: -26px -18px; border: 1px solid var(--line); border-radius: 49% 49% 14px 14px / 12% 12% 14px 14px; transform: rotate(-2deg); pointer-events: none; }
+.hero-photo { position: absolute; inset: 0; overflow: hidden; background: #b5b49c; border: 9px solid #fffcf5; border-radius: 46% 46% 5px 5px / 15% 15% 5px 5px; box-shadow: 0 15px 45px #79503e12; }
 .hero-photo img { height: 100%; object-fit: cover; object-position: 50% 42%; }
 .hero-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 65%, #26271055); pointer-events: none; }
 .hero-photo-label { position: absolute; left: 24px; bottom: 23px; z-index: 1; color: white; font-size: 9px; letter-spacing: 1.6px; }
@@ -77,7 +87,10 @@ em { font-family: var(--serif); font-weight: 400; }
 .journal-note > .journal-quote { font-size: clamp(22px, 3.3vw, 56px); line-height: 1.95; letter-spacing: .06em; margin-top: 30px; }
 .quote-line { display: block; }
 .quote-challenge { color: var(--muted); margin-top: .45em; }
-.journal-note-flower { display: block; font-size: 40px; color: #a69272; margin-top: 32px; }
+.journal-note-flower { font-size: 40px; color: var(--sage); margin: 32px auto 0; }
+.journal-note::before, .journal-note::after { content: ''; position: absolute; width: clamp(70px, 12vw, 180px); height: 46%; top: 27%; border: 1px solid var(--line); border-radius: 100% 0 100% 0; pointer-events: none; }
+.journal-note::before { left: -3%; transform: rotate(-28deg); }
+.journal-note::after { right: -3%; transform: rotate(28deg) scaleX(-1); }
 .collection { padding: 0 4.5%; scroll-margin-top: 40px; }
 .collection-intro { padding: 36px 0 70px; border-top: 1px solid var(--line); }
 .collection-heading { display: flex; align-items: end; justify-content: space-between; gap: 40px; margin-top: 28px; }
@@ -93,6 +106,39 @@ em { font-family: var(--serif); font-weight: 400; }
 .photo-card:nth-child(6) { grid-column: 7 / span 6; margin-top: 90px; }
 .photo-card:nth-child(7) { grid-column: 2 / span 5; }
 .photo-card:nth-child(8) { grid-column: 9 / span 4; margin-top: 150px; }
+.photo-mat {
+  position: relative;
+  padding: clamp(7px, 1vw, 14px);
+  background: #fffcf5;
+  box-shadow: 0 7px 26px #79503e12;
+  border-radius: 2px;
+}
+/* The repeating SVG keeps the lace stitches the same size on every card. */
+.photo-mat::before {
+  content: '';
+  position: absolute;
+  inset: -16px;
+  border: 24px solid transparent;
+  border-image: url('/ornaments/lace.svg') 30 / 24px / 0 round;
+  pointer-events: none;
+}
+.photo-mat::after {
+  content: '✿';
+  position: absolute;
+  top: -25px;
+  left: calc(50% - 16px);
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  background: var(--rose);
+  border: 3px double #fffcf5;
+  border-radius: 50%;
+  font: 17px var(--serif);
+  pointer-events: none;
+}
+.photo-card:nth-child(3n + 2) .photo-mat::after { background: #dce3cf; }
 .photo-open { position: relative; width: 100%; padding: 0; border: 0; background: #e8e2d8; display: block; overflow: hidden; aspect-ratio: 4 / 5; }
 .photo-open img { height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2,.65,.3,1), filter .5s; }
 .photo-card--1 .photo-open, .photo-card:nth-child(6) .photo-open { aspect-ratio: 1.1; }
@@ -101,17 +147,17 @@ em { font-family: var(--serif); font-weight: 400; }
 .photo-view { position: absolute; right: 16px; bottom: 16px; border-radius: 50px; background: var(--paper); padding: 13px 18px; font-size: 11px; opacity: 0; transform: translateY(8px); transition: opacity .3s, transform .3s; }
 .photo-open:hover .photo-view, .photo-open:focus-visible .photo-view { opacity: 1; transform: none; }
 .photo-error { position: absolute; inset: 0; display: grid; place-content: center; background: #e8e2d8; padding: 25px; font-size: 13px; }
-.photo-caption { display: flex; justify-content: space-between; gap: 16px; padding: 17px 0 0; }
+.photo-caption { display: flex; justify-content: space-between; gap: 16px; padding: 26px 5px 0; }
 .photo-caption h3 { font-family: var(--serif); font-size: clamp(17px, 1.5vw, 26px); line-height: 1.2; }
 .photo-caption p { font-size: 9px; color: var(--muted); margin-top: 8px; letter-spacing: .3px; }
 .photo-caption > div { min-width: 0; overflow-wrap: anywhere; }
 .photo-caption h3 { line-height: 1.5; }
 .photo-caption p { line-height: 1.7; }
 .collection-end { text-align: center; padding: 65px 20px 130px; }
-.small-flower { display: block; font-size: 64px; line-height: 1; }
+.small-flower { font-size: 64px; color: var(--sage); margin: 0 auto; }
 .collection-end p { font-size: clamp(27px, 4.3vw, 70px); letter-spacing: .06em; line-height: 1.7; margin: 32px 0; }
 .collection-end .eyebrow { color: var(--muted); }
-.site-footer { color: var(--paper); background: var(--ink); padding: 65px 4.5% 25px; }
+.site-footer { position: relative; color: var(--paper); background: var(--ink); padding: 65px 4.5% 25px; border-radius: 50% 50% 0 0 / 28px 28px 0 0; }
 .footer-top { display: flex; justify-content: space-between; align-items: center; padding-bottom: 60px; }
 .footer-invitation { font-size: clamp(27px, 6.2vw, 100px); letter-spacing: .025em; line-height: 1.65; margin-top: 26px; }
 .round-link { width: 76px; height: 76px; display: grid; place-items: center; border: 1px solid #f6f2e960; border-radius: 50%; font-size: 28px; transition: background .25s, color .25s; }
@@ -181,6 +227,8 @@ em { font-family: var(--serif); font-weight: 400; }
   .hero-description p { font-size: 11px; line-height: 1.7; }
   .hero-description .text-link { font-size: 10px; margin-top: 0; gap: 12px; white-space: nowrap; }
   .hero-photo-frame { height: 68vw; max-height: 550px; margin: 0; }
+  .hero-photo-frame::before { inset: -14px -9px; }
+  .hero-photo { border-width: 6px; }
   .hero-photo-label { left: 16px; bottom: 17px; font-size: 8px; }
   .hero-side-note { display: none; }
   .hero-footnote { padding: 34px 0 20px; font-size: 7px; letter-spacing: .8px; }
@@ -193,10 +241,12 @@ em { font-family: var(--serif); font-weight: 400; }
   .collection-heading { display: block; margin-top: 22px; }
   .collection-heading h2 { font-size: 6.7vw; letter-spacing: .025em; }
   .collection-heading > p { margin-top: 24px; font-size: 11px; }
-  .photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 6%; row-gap: 25px; padding: 15px 0 20px; }
+  .photo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 9%; row-gap: 25px; padding: 15px 0 20px; }
+  .photo-mat::before { inset: -10px; border-width: 16px; border-image-width: 16px; }
+  .photo-mat::after { top: -19px; left: calc(50% - 12px); width: 24px; height: 24px; font-size: 13px; }
   .photo-card:nth-child(n) { grid-column: auto; margin-top: 0; padding-bottom: 25px; }
   .photo-card:nth-child(even) { margin-top: 70px; }
-  .photo-caption { gap: 8px; padding-top: 12px; }
+  .photo-caption { gap: 8px; padding: 19px 0 0; }
   .photo-caption h3 { font-size: 16px; }
   .photo-caption p { font-size: 8px; line-height: 1.5; }
   .photo-view { padding: 9px 12px; font-size: 9px; right: 9px; bottom: 9px; }

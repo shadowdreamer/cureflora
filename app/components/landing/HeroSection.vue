@@ -7,7 +7,7 @@ section.hero(aria-labelledby="hero-title")
     h1#hero-title.hero-title.japanese-display(lang="ja" data-hero-reveal)
       span.hero-title-first 咲きほこる
       span.hero-title-second 花のプリンセス！
-    .hero-flower(aria-hidden="true" data-parallax="45") ✳
+    LandingAlstroemeria.hero-flower(data-parallax="45")
   .hero-bottom
     .hero-description(data-hero-reveal)
       p Flowers. Fleeting light.

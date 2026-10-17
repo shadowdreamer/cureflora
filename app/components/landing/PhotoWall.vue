@@ -10,7 +10,7 @@ section#collection.collection(aria-labelledby="collection-title")
   .photo-grid
     LandingPhotoCard(v-for="(photo, index) in photos" :key="photo.id" :photo="photo" :index="index" @open="openPhoto")
   .collection-end(data-reveal)
-    span.small-flower(aria-hidden="true") ✳
+    LandingAlstroemeria.small-flower
     p.japanese-display(lang="ja") 咲きほこる
       br
       | 花のプリンセス！
