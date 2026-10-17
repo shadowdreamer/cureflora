@@ -1,0 +1,53 @@
+import type gsap from 'gsap'
+import type { Ref } from 'vue'
+
+export function usePhotoWallMotion(root: Ref<HTMLElement | null>) {
+  let context: gsap.Context | undefined
+  let media: gsap.MatchMedia | undefined
+  let observer: ResizeObserver | undefined
+  let frame = 0
+  let disposed = false
+  const { $motion } = useNuxtApp()
+
+  onMounted(() => {
+    if (!root.value || !$motion) return
+    const { gsap, ScrollTrigger } = $motion
+    const refresh = () => {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => { if (!disposed) ScrollTrigger.refresh() })
+    }
+    context = gsap.context(() => {
+      media = gsap.matchMedia()
+      media.add({ desktop: '(min-width: 769px)', mobile: '(max-width: 768px)', reduce: '(prefers-reduced-motion: reduce)' }, match => {
+        if (match.conditions?.reduce) return
+        const desktop = match.conditions?.desktop
+        gsap.from('[data-hero-reveal]', { y: 36, opacity: 0, duration: 1.15, stagger: 0.12, ease: 'power3.out' })
+        gsap.utils.toArray<HTMLElement>('[data-parallax]').forEach(element => {
+          const distance = Number(element.dataset.parallax) * (desktop ? 1 : 0.35)
+          gsap.fromTo(element, { y: distance }, { y: -distance, ease: 'none', scrollTrigger: {
+            trigger: element.parentElement, start: 'top bottom', end: 'bottom top', scrub: true,
+            invalidateOnRefresh: true,
+          } })
+        })
+        gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach(element => {
+          gsap.from(element, { y: 28, opacity: 0, duration: 0.85, ease: 'power2.out', scrollTrigger: {
+            trigger: element, start: 'top 94%', once: true,
+          } })
+        })
+        gsap.to('.reading-progress', { scaleX: 1, ease: 'none', scrollTrigger: {
+          trigger: root.value, start: 'top top', end: 'bottom bottom', scrub: true,
+        } })
+      })
+    }, root.value)
+    observer = new ResizeObserver(refresh)
+    observer.observe(root.value)
+    void document.fonts.ready.then(() => { if (!disposed) refresh() })
+  })
+  onBeforeUnmount(() => {
+    disposed = true
+    cancelAnimationFrame(frame)
+    observer?.disconnect()
+    media?.revert()
+    context?.revert()
+  })
+}

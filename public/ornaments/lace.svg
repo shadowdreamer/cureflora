@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 90 90">
+  <defs>
+    <g id="edge">
+      <path d="M30 30V12C30 1 40 1 40 12C40 1 50 1 50 12C50 1 60 1 60 12V30Z" fill="#fffcf5"/>
+      <g fill="none" stroke="#cfb9ac" stroke-width=".65">
+        <ellipse cx="35" cy="10" rx="2" ry="3.5"/>
+        <ellipse cx="45" cy="10" rx="2" ry="3.5"/>
+        <ellipse cx="55" cy="10" rx="2" ry="3.5"/>
+        <path d="M30 21H60M30 25H60"/>
+      </g>
+      <path d="M31 18H59" stroke="#d9c4b5" stroke-width=".8" stroke-dasharray="1 2"/>
+    </g>
+    <g id="corner">
+      <path d="M30 30H9V24C0 24 0 14 9 14C1 7 8 0 15 8C15 0 25 0 25 9H30Z" fill="#fffcf5"/>
+      <g fill="none" stroke="#cfb9ac" stroke-width=".65">
+        <path d="M11 11C7 2 2 8 11 11ZM20 11C16 3 24 3 20 11ZM11 20C3 16 3 24 11 20Z"/>
+        <circle cx="17" cy="17" r="3"/>
+        <path d="M21 30V24Q21 21 24 21H30M25 30V28Q25 25 28 25H30"/>
+      </g>
+    </g>
+  </defs>
+  <use href="#edge"/><use href="#edge" transform="rotate(90 45 45)"/>
+  <use href="#edge" transform="rotate(180 45 45)"/><use href="#edge" transform="rotate(270 45 45)"/>
+  <use href="#corner"/><use href="#corner" transform="rotate(90 45 45)"/>
+  <use href="#corner" transform="rotate(180 45 45)"/><use href="#corner" transform="rotate(270 45 45)"/>
+</svg>

@@ -1,23 +1,29 @@
 {
-  "name": "nuxt-app",
+  "name": "cureflora",
   "private": true,
   "type": "module",
+  "packageManager": "pnpm@9.11.0",
+  "engines": { "node": "^22.22.3 || ^24.15.0 || >=26.0.0" },
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "typecheck": "nuxt prepare && vue-tsc --build"
   },
   "dependencies": {
-    "@nuxtjs/tailwindcss": "^6.12.0",
-    "nuxt": "^3.11.2",
-    "vue": "^3.4.27",
-    "vue-router": "^4.3.2"
+    "@nuxt/image": "2.1.0",
+    "gsap": "3.15.0",
+    "lenis": "1.3.27",
+    "nuxt": "4.6.2",
+    "vue": "3.5.44",
+    "vue-router": "5.4.0"
   },
   "devDependencies": {
-    "@vue/language-plugin-pug": "^2.0.19",
-    "pug": "^3.0.3",
-    "sass": "^1.77.4"
+    "@vue/language-plugin-pug": "3.3.13",
+    "pug": "3.0.4",
+    "typescript": "5.9.3",
+    "vue-tsc": "3.3.13"
   }
 }
