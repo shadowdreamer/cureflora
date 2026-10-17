@@ -53,14 +53,16 @@ pnpm-lock.yaml
 - 大字号文案使用日语和用户指定的 FOT Pearl 字体。主标题为「咲きほこる花のプリンセス！」；中段宣言为「冷たい檻に閉ざされた夢、返して頂きますわ!お覚悟はよろしくて?」；照片墙和页脚强调「強く　優しく　美しく」。保留这些指定句子的原始文字与标点，按语义断行，不替换成英文宣传语。
 
 - `/`：品牌导航、大字号 Hero、视觉日记介绍、17 张错落插画墙、结束语及页脚。
-- `/about`：介绍与图片来源链接；`#credits` 可直达来源列表。
+- `/about`：KV 使用 `public/photos/GKzSRHeagAAWDmH.webp`（666×900，由同名 PNG 经 FFmpeg 转换，原图保留），桌面标题与插画并排、手机上下排列，完整展示画面；其后为介绍与图片来源链接，`#credits` 可直达来源列表。
 - `#collection`：照片墙锚点。灯箱支持鼠标、触屏、左右方向键、Esc 和关闭按钮。
 - 灯箱使用原生 modal dialog：打开后焦点进入、键盘焦点限制在对话框内，关闭后回到触发卡片。打开期间暂停 Lenis 并锁住背景滚动。
 - 桌面采用宽窄交错的十二列网格；手机为两列。DOM 顺序与键盘顺序一致。
 - 视觉采用奶油纸色、柔玫瑰与鼠尾草绿。照片卡片的 `.photo-mat` 使用 `public/ornaments/lace.svg` 的重复九宫格边框，保持不同尺寸下蕾丝针脚比例；装饰不接收指针事件，图片按钮仍负责灯箱交互。手机缩小花边并增加列间距。
+- 照片内四角使用 `public/ornaments/inner-corner.svg` 奶油白与淡金藤蔓镶边，通过 `.photo-inlay` 的四个镜向旋转角饰覆盖在图片上，随卡片缩放但不随图片悬停放大；对辅助技术隐藏且不接收指针事件。
+- `.photo-wall-stage` 内的 `LandingWallRibbon` 使用三条淡玫瑰与金色 SVG 贝塞尔曲线贯穿照片墙背景，随网格实际高度伸展、保持描边粗细，首尾淡出；装饰独立分层、不参与网格、不接收指针事件，也不增加动画或滚动监听。
 - Hero 主图使用柔和拱形与细线外框，中段叶形线条与页脚弧线延续童话剪贴簿风格；保留现有指定日文字体与文案。
 - 网站图标 `public/favicon.svg` 为百合花；页头、Hero、中段、结束语和页脚的花形点缀统一使用 `LandingAlstroemeria` 六出花 SVG 组件，以 currentColor 继承配色，装饰对辅助技术隐藏。
-- Hero 与照片具有不同方向、不同幅度的滚动视差，手机降低位移幅度。
+- Hero 保留原有滚动视差。照片墙使用可逆的轻阻尼上浮入场：以不移动的 `.photo-card` 为触发器，同时移动其 `[data-photo-float]` 相框和标题；向下滚从正 y 位移回到 0，进入视窗中下部后落位，向上滚反向退回。桌面 scrub 为 0.4 秒、手机为 0.3 秒且降低位移；与既有 GSAP ticker 共用驱动，不降低帧率、不排队播放、不增加滚轮监听，不逐帧测量布局。
 - 系统启用减少动态效果时，不创建视差与入场动画，不初始化 Lenis；运行时切换也需生效。
 
 ## 动画与生命周期约定
@@ -70,12 +72,12 @@ pnpm-lock.yaml
 3. `usePhotoWallMotion` 在组件挂载后创建以页面根元素为 scope 的 GSAP context，并用 matchMedia 管理断点与动态效果偏好。
 4. 页面卸载必须 revert media/context，断开 ResizeObserver，取消尚未执行的帧回调。插件卸载或热更新时解绑 ticker、媒体监听和路由钩子。
 5. 优先 transform/opacity；禁止为每张图长期 pin、每帧 refresh、大面积 blur 或全局 DOM 选择器串扰。
-6. 页面默认可读；不设置永久隐藏的初始样式，不用手工 DOM remove 删除 Vue 节点，不加入阻塞浏览的全屏开场遮罩。
+6. 页面默认可读；不设置永久隐藏的初始样式，不用手工 DOM remove 删除 Vue 节点。按用户指定，首次访问使用柔玫瑰纯色全屏 Loading，文案为「Princess Engage」，以波浪边缘从下往上揭幕。`LoadingScreen.vue` 等待指定字体及首屏高优先级图片解码（最多 4 秒，普通动态效果最短 900ms），随后升幕；减少动态效果时直接退出。入口 head 脚本启用遮罩并在 7.5 秒后兜底移除启用类，无脚本不显示遮罩。加载时页面 inert、暂停 Lenis，结束后恢复。`intro-ready` 仅控制首次进入，路由往返不重播；`usePhotoWallMotion` 在揭幕后初始化，卸载时取消等待与动画。
 7. Lenis 的锁定状态必须在动态效果偏好改变时保留；灯箱卸载也必须恢复滚动状态。
 
 ## 数据与模板约定
 
-- `app/data/photos.ts` 管理本地图库与尺寸；`app/data/pixiv-artworks.js` 集中记录 16 个 Pixiv 编号、真实标题、副标题、完整纯文本说明、作者与原作链接（2026-10-17 从公开作品接口读取）。副标题取说明首个非空行，说明为空时留空。photos.ts 按 artworkNumber 合并作品元数据，页面不重复维护标题；模型位于 `app/types/photo.ts`。图片 id 稳定，保留原始尺寸、准确 alt、标题、备注、originalFilename 与可选 artworkNumber/sourceUrl。详情弹窗以小字显示 No. 编号，无编号时显示原文件名；照片墙仅显示标题和副标题，不显示顺序号、作品 ID、画师名字或编号链接；弹窗位置使用数组索引。heroPhoto 复用图库数据，首页与 OG 图片不单独写死路径。
+- `app/data/photos.ts` 管理本地图库与尺寸；`app/data/pixiv-artworks.js` 集中记录 16 个 Pixiv 编号、真实标题、副标题、完整纯文本说明、作者与原作链接（2026-10-17 从公开作品接口读取）。副标题取说明首个非空行，说明为空时留空。photos.ts 按 artworkNumber 合并作品元数据，页面不重复维护标题；模型位于 `app/types/photo.ts`。图片 id 稳定，保留原始尺寸、准确 alt、标题、备注、originalFilename 与可选 artworkNumber/sourceUrl。详情弹窗和 About 页均不显示作品 ID 或原文件名，编号仅保存在数据中用于关联与原作链接；照片墙仅显示标题和副标题，不显示顺序号、作品 ID、画师名字或编号链接；弹窗位置使用数组索引。heroPhoto 复用图库数据，首页与 OG 图片不单独写死路径。
 - 使用两个空格缩进的 Pug 与 Vue 指令。响应式循环使用 v-for 和稳定 key，不使用 Pug 编译期循环。
 - Pug 属性中的动态字符串优先字符串拼接，避免预处理器与模板字面量发生冲突。
 - 卡片使用 button，路由使用 NuxtLink，锚点使用原生链接；不让无语义 div 承担交互。
@@ -88,8 +90,8 @@ pnpm-lock.yaml
 
 - SSR 输出实际内容，每页一个 h1，不把整页放进 ClientOnly。
 - 标题、description、canonical 和 OG URL 由布局与页面管理。部署域名来自 runtimeConfig.public.siteUrl，可用 NUXT_PUBLIC_SITE_URL 覆盖。
-- 当前插画由用户提供，16 个编号已从 https://www.pixiv.net/artworks/{id} 对应的公开作品信息核对标题、说明与作者。图片旁仅显示标题与副标题；作者、作品编号和 Pixiv 原作链接保留在详情内，外链使用新标签页和 noopener noreferrer。无编号的 GmWmxRua8AAmebf.jfif 来源仍未确认，不推测作者或链接，不声明为原创或 Unsplash 素材。外部说明仅以纯文本插值渲染，不使用 v-html。
-- 日语通过 @font-face 加载 `assets/fonts/FOT-Pearl_Std_L.woff`，使用 font-display: swap 并保留系统字体回退；英文继续使用系统字体。不要替换用户指定的日文字体。
+- 当前插画由用户提供，16 个编号已从 https://www.pixiv.net/artworks/{id} 对应的公开作品信息核对标题、说明与作者。图片旁仅显示标题与副标题；作者和 Pixiv 原作链接保留在详情内，外链使用新标签页和 noopener noreferrer。无编号的 GmWmxRua8AAmebf.jfif 来源仍未确认，不推测作者或链接，不声明为原创或 Unsplash 素材。外部说明仅以纯文本插值渲染，不使用 v-html。
+- 全站统一使用 `--font-body` 字体栈，优先通过 @font-face 加载 `assets/fonts/FOT-Pearl_Std_L.woff`，保留 font-display: swap。缺失的英文字形依次回退到 Iowan Old Style、Palatino Linotype、Book Antiqua、Palatino，再回退到 Georgia、Times New Roman；日文字形保留游明朝等系统回退，最终使用 serif。导航、按钮、正文、标题和灯箱均使用同一字体栈，不另引入网络字体，不替换用户提供的 FOT 字体。
 - 不默认添加账户、后台、上传、支付、数据库、搜索或无限滚动。
 
 ## 开发和验证

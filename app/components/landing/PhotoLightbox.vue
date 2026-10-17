@@ -12,8 +12,6 @@ dialog.photo-lightbox(ref="dialog" aria-labelledby="lightbox-title" @cancel.prev
           h2#lightbox-title {{ photo.title }}
           p(v-if="photo.note") {{ photo.note }}
           p(v-if="photo.artist") {{ photo.artist }}
-          small.lightbox-reference(v-if="photo.artworkNumber") No. {{ photo.artworkNumber }}
-          small.lightbox-reference(v-else) File: {{ photo.originalFilename }}
           a.lightbox-source(v-if="photo.sourceUrl" :href="photo.sourceUrl" target="_blank" rel="noopener noreferrer") View on Pixiv ↗
         span {{ String((activeIndex ?? 0) + 1).padStart(2, '0') }} / {{ String(photos.length).padStart(2, '0') }}
     button.lightbox-arrow(type="button" aria-label="Next photo" @click="move(1)") →

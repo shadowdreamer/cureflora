@@ -6,7 +6,7 @@ footer.site-footer
       p.footer-invitation.japanese-display(lang="ja") 強く　優しく　美しく
     a.round-link(href="#top" aria-label="Back to top") ↑
   .footer-bottom
-    NuxtLink.wordmark(to="/" aria-label="CureFlora home") cureflora
+    NuxtLink.wordmark(to="/" aria-label="CureFlora home") Cure Flora
       LandingAlstroemeria.wordmark-star
     p An independent visual journal. © {{ year }}
     NuxtLink(to="/about#credits") Image credits ↗
