@@ -156,7 +156,7 @@ em { font-family: var(--font-body); font-weight: 400; }
 .round-link:hover { background: var(--paper); color: var(--ink); }
 .footer-bottom { padding-top: 26px; border-top: 1px solid #f6f2e950; display: flex; align-items: center; justify-content: space-between; gap: 25px; }
 .footer-bottom .wordmark { font-size: 28px; }
-.footer-bottom > p, .footer-bottom > a:last-child { font-size: 10px; }
+.footer-bottom > p, .footer-bottom > a:not(.wordmark) { font-size: 10px; }
 .reading-progress { position: fixed; z-index: 25; top: 0; left: 0; height: 3px; width: 100%; background: var(--ink); transform: scaleX(0); transform-origin: left; }
 .photo-lightbox { padding: 28px 4%; border: none; color: var(--paper); background: #251b1dee; width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; overscroll-behavior: contain; }
 .photo-lightbox::backdrop { background: #251b1d; }
@@ -201,14 +201,14 @@ em { font-family: var(--font-body); font-weight: 400; }
   .photo-card--3 { margin-top: 120px; }
 }
 @media (max-width: 768px) {
-  .site-header { height: 82px; margin: 0 6%; gap: 16px; }
+  .site-header { height: 108px; margin: 0 6%; gap: 0; flex-direction: column; align-items: flex-start; justify-content: center; }
   .wordmark { font-size: 30px; }
   .site-header .wordmark { font-size: clamp(20px, 5.6vw, 30px); white-space: nowrap; }
   .site-header .wordmark-star { font-size: .8em; }
-  .header-nav { margin-left: auto; }
+  .header-nav { width: 100%; justify-content: space-between; gap: 12px; }
   .header-nav a { font-size: clamp(9px, 2.5vw, 11px); white-space: nowrap; }
-  .header-nav a:last-child, .header-cta { display: none; }
-  .hero { min-height: calc(100svh - 82px); padding: clamp(14px, 2svh, 20px) 6% 0; }
+  .header-cta { display: none; }
+  .hero { min-height: calc(100svh - 108px); padding: clamp(14px, 2svh, 20px) 6% 0; }
   .hero-kicker { font-size: 8px; letter-spacing: 1px; }
   .hero-kicker > span:last-child { display: none; }
   .hero-main { grid-template-columns: minmax(0, 1fr); gap: 24px; align-content: center; padding: 20px 0 12px; }

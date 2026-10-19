@@ -17,7 +17,7 @@ useHead({
   link: () => canonical.value ? [{ rel: 'canonical', href: canonical.value }] : [],
 })
 useSeoMeta({
-  description: 'A quiet collection of flowers, fleeting light, and the beauty in between. An independent visual journal by CureFlora.',
+  description: 'キュアフローラ',
   ogSiteName: 'CureFlora',
   ogType: 'website',
   ogUrl: () => canonical.value,
